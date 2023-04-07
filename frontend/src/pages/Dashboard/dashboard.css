@@ -1,0 +1,85 @@
+#Dashboard {
+  display: flex;
+}
+
+.dashboardSidebar {
+  width: 15vw;
+  margin: 5vh 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.dashboardSidebar ul {
+  list-style: none;
+  margin-left: 4vw;
+  margin-top: 8vh;
+}
+.dashboardSidebar ul li {
+  padding: 2vh 3vw;
+  margin: 3vh;
+}
+.dashboardSidebar ul li a {
+  /* Removing List Style */
+  text-decoration: none;
+  color: #000;
+  /* Button Dimenstions and alignment*/
+  /* Font styling in dashboardsidebar */
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: grey;
+}
+/* Hover effect on dashboardsidebar buttons */
+.dashboardSidebar ul li a:hover {
+  color: rebeccapurple;
+  position: relative;
+  left: 20px;
+  transition: all ease 1s;
+}
+/* Active Class for dashboardsidebar links */
+.sidebarActiveLink {
+  background: rgb(217, 217, 217);
+  border-left: solid 6px rebeccapurple;
+  position: relative;
+}
+
+/* RIGHT SIDE OF THE PAGE #MAIN DASHBOARD */
+.mainDashboardPage {
+  margin: 2vh 3vw;
+}
+/* Dashboard navbar styling */
+.dashboardNav {
+  width: 80vw;
+  display: flex;
+  justify-content: space-between;
+}
+.signedUserDetails {
+  display: flex;
+  align-items: center;
+}
+.signedUserText p {
+  font-size: small;
+}
+.signedUserPic {
+  width: 40px;
+  height: 40px;
+  background: #000;
+  border-radius: 20px;
+  margin: 0 1px;
+}
+
+/* DASHBOARD PAGE */
+.dashCards {
+  display: flex;
+  width: 50vw;
+  height: 10vh;
+  margin: 2vh 0;
+}
+/* Designing Cards */
+.dashCard {
+  width: 15vw;
+  height: 45vh;
+  border-radius: 20px;
+
+  box-shadow: 1px 1px 3px #121212;
+  margin: 5px;
+}
