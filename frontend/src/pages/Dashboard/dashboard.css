@@ -1,45 +1,13 @@
-#Dashboard {
-  display: flex;
+/* Testing */
+#map {
+  display: block;
+  z-index: inherit;
+  background: #000;
 }
 
-.dashboardSidebar {
-  width: 15vw;
-  margin: 5vh 0;
+/*  */
+#Dashboard {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.dashboardSidebar ul {
-  list-style: none;
-  margin-left: 4vw;
-  margin-top: 8vh;
-}
-.dashboardSidebar ul li {
-  padding: 2vh 3vw;
-  margin: 3vh;
-}
-.dashboardSidebar ul li a {
-  /* Removing List Style */
-  text-decoration: none;
-  color: #000;
-  /* Button Dimenstions and alignment*/
-  /* Font styling in dashboardsidebar */
-  font-weight: 600;
-  font-size: 0.9rem;
-  color: grey;
-}
-/* Hover effect on dashboardsidebar buttons */
-.dashboardSidebar ul li a:hover {
-  color: rebeccapurple;
-  position: relative;
-  left: 20px;
-  transition: all ease 1s;
-}
-/* Active Class for dashboardsidebar links */
-.sidebarActiveLink {
-  background: rgb(217, 217, 217);
-  border-left: solid 6px rebeccapurple;
-  position: relative;
 }
 
 /* RIGHT SIDE OF THE PAGE #MAIN DASHBOARD */
@@ -82,4 +50,35 @@
 
   box-shadow: 1px 1px 3px #121212;
   margin: 5px;
+}
+
+/* Map Css */
+.deliveryMapButtons {
+  position: absolute;
+  top: 80vh;
+  background: #c46a6a;
+  z-index: 2;
+}
+.deliveryMapButtons ul {
+  display: flex;
+  list-style: none;
+  text-decoration: none;
+}
+#DeliveryMap {
+  display: none;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  left: 10%;
+  top: 10%;
+  height: 80vh;
+  width: 80vw;
+}
+#CloseMapBtn {
+  position: fixed;
+  top: 2.5vh;
+  left: 12.5vw;
+  background: red;
+  z-index: 2;
 }

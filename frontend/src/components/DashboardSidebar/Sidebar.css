@@ -1,0 +1,39 @@
+.dashboardSidebar {
+  width: 15vw;
+  margin: 5vh 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.dashboardSidebar ul {
+  list-style: none;
+  margin-left: 4vw;
+  margin-top: 8vh;
+}
+.dashboardSidebar ul li {
+  padding: 2vh 3vw;
+  margin: 3vh;
+}
+.dashboardSidebar ul li a {
+  /* Removing List Style */
+  text-decoration: none;
+  color: #000;
+  /* Button Dimenstions and alignment*/
+  /* Font styling in dashboardsidebar */
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: grey;
+}
+/* Hover effect on dashboardsidebar buttons */
+.dashboardSidebar ul li a:hover {
+  color: rebeccapurple;
+  position: relative;
+  left: 20px;
+  transition: all ease 1s;
+}
+/* Active Class for dashboardsidebar links */
+.sidebarActiveLink {
+  background: rgb(217, 217, 217);
+  border-left: solid 6px rebeccapurple;
+  position: relative;
+}

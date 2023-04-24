@@ -1,0 +1,51 @@
+#DeliveryHistory {
+  display: flex;
+}
+
+/* Styling the history Card */
+#HistoryCard {
+  display: flex;
+  padding: 1vw;
+  margin: 1vw;
+  border: solid 2px rebeccapurple;
+  border-radius: 10px;
+}
+#HistoryCard:hover {
+  box-shadow: 2px 2px 5px rebeccapurple;
+  transition: all 0.2s;
+}
+#HistoryCard div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.historyQuantity {
+  flex-direction: column;
+  margin: auto;
+}
+.supportingHistoryContent div {
+  font-size: smaller;
+  font-style: italic;
+  padding: 5px;
+}
+
+#moreDetailsCard {
+  height: 70vh;
+  width: 70vw;
+  position: absolute;
+  background-color: orange;
+  display: none;
+}
+
+#CloseHistoryCard {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  align-items: center;
+  position: absolute;
+  right: 0;
+  background-color: green;
+  width: 50px;
+  height: 50px;
+}
