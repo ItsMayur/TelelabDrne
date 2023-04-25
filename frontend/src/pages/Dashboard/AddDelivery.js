@@ -1,15 +1,12 @@
 import { Loader } from "@googlemaps/js-api-loader";
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import NewMap from "./NewMap";
 
 import {
-  DistanceMatrixService,
   useJsApiLoader,
   GoogleMap,
-  Circle,
   Marker,
   Polygon,
-  InfoWindow,
 } from "@react-google-maps/api";
 
 import "./dashboard.css";
@@ -57,18 +54,16 @@ const Drones = [
 // MAP variable
 let map;
 // Constant to set properties of circle of 1 km radius around person
-
 const options = {
   strokeColor: "#FF0000",
   strokeOpacity: 0.8,
   strokeWeight: 2,
-  fillColor: "#fff",
+  fillColor: "red",
   fillOpacity: 0.35,
   clickable: false,
   draggable: false,
   editable: false,
   visible: true,
-  radius: 1000,
   zIndex: 2,
 };
 
@@ -116,6 +111,12 @@ const AddDelivery = (props) => {
   const CloseMapEvent = () => {
     document.getElementById("DeliveryMap").style.display = "none";
   };
+  // To check if the location is inside the triangle or not
+  const isInsidePoligon = (userPosition, Polygon) => {
+    console.log(
+      window.google.maps.geometry.poly.containsLocation(userPosition, Polygon)
+    );
+  };
 
   // To check is it loaded or not
   if (!isLoaded) {
@@ -150,7 +151,7 @@ const AddDelivery = (props) => {
             {/* User location marker */}
             <Marker position={userLocationDetails}></Marker>
             <Polygon
-              //onLoad={}
+              onLoad={isInsidePoligon(userLocationDetails, Drones)}
               paths={Drones}
               options={options}
             />
