@@ -1,6 +1,10 @@
 import React from "react";
 
 const NavDashboard = (props) => {
+  const userDetails = {
+    name: props.name,
+    email: props.email,
+  };
   return (
     <div className="dashboardNav">
       <div>
@@ -9,9 +13,10 @@ const NavDashboard = (props) => {
       <div className="signedUserDetails">
         <div className="signedUserText">
           <p>
-            Hello,<b>Username {/* user.getBasicProfile().getName()) */}</b>
+            Hello,
+            <b>{userDetails.name}</b>
           </p>
-          <p>Organisation </p>
+          <p>{userDetails.email}</p>
         </div>
         <div className="signedUserPic">
           <img

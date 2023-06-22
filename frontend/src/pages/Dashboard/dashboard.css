@@ -82,3 +82,17 @@
   background: red;
   z-index: 2;
 }
+
+/* Delivery status */
+#DeliveryStepsStatus ul {
+  list-style: none;
+}
+#DeliveryStepsStatus ul li a {
+  color: #000;
+  text-decoration: none;
+}
+
+.activeDeliveryStep {
+  background-color: #c46a6a;
+  color: white;
+}

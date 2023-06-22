@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./dashboard.css";
 import { useNavigate, Link } from "react-router-dom";
 import AddDelivery from "./AddDelivery";
 import Sidebar from "../../components/DashboardSidebar/Sidebar";
 import NavDashboard from "../../components/NavDashboard/NavDashboard";
 
-const Dashboard = () => {
-  const navigate = useNavigate();
+const Dashboard = (props) => {
   // Function to log out user on click
 
   return (
@@ -17,11 +16,22 @@ const Dashboard = () => {
       {/* Navbar that display page name and user credential */}
       <div className="mainDashboardPage">
         {/* Navbar of Dashboard */}
-        <NavDashboard pageHeading="Dashboard" />
+        <NavDashboard
+          pageHeading="Dashboard"
+          name={props.name}
+          email={props.email}
+          id={props.id}
+        />
+
         {/* Mainpage for dashboard */}
         <div className="dashPage">
           <div className="dashCards">
-            <AddDelivery heading="Add Delivery" />
+            <AddDelivery
+              heading="Add Delivery"
+              name={props.name}
+              email={props.email}
+              id={props.id}
+            />
           </div>
         </div>
       </div>

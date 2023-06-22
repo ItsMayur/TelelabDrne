@@ -1,0 +1,35 @@
+{
+  "name": "Mayur Sehgal",
+  "email": "dummyid@gmail.com",
+  "id": "hnji_mayur",
+  "deliveryHistory": [
+    {
+      "packageName": "Name 1",
+      "packageWeight": " 3.12",
+      "packageQuantity": "30",
+      "packageOrderTime": "24/06/2023",
+      "packageDeliveryTime": "28/06/2023"
+    },
+    {
+      "packageName": "Name 1",
+      "packageWeight": " 3.12",
+      "packageQuantity": "30",
+      "packageOrderTime": "24/06/2023",
+      "packageDeliveryTime": "28/06/2023"
+    },
+    {
+      "packageName": "Name 2",
+      "packageWeight": " 3.222",
+      "packageQuantity": "323",
+      "packageOrderTime": "24/06/2023",
+      "packageDeliveryTime": "28/06/2023"
+    },
+    {
+      "packageName": "Name 3",
+      "packageWeight": " 5.125",
+      "packageQuantity": "3",
+      "packageOrderTime": "24/07/2023",
+      "packageDeliveryTime": "28/07/2023"
+    }
+  ]
+}
