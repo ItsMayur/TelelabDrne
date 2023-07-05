@@ -1,6 +1,4 @@
-import { Loader } from "@googlemaps/js-api-loader";
-import { React, useState, useCallback } from "react";
-
+import { React, useState, useCallback, useEffect } from "react";
 import {
   useJsApiLoader,
   GoogleMap,
@@ -8,51 +6,44 @@ import {
   Polyline,
   Polygon,
 } from "@react-google-maps/api";
-
 import "./dashboard.css";
-const loader = new Loader({
-  apiKey: "AIzaSyAzie1a-9pIB9k5cpQbwPHRnqI4gQFmS-Y",
 
-  version: "weekly",
-  libraries: ["places"],
-});
+// DUMMY DRONES
+const Drones = [
+  {
+    lat: 30.74,
+    lng: 76.78,
+  },
+  {
+    lat: 30.731,
+    lng: 76.788,
+  },
+  {
+    lat: 30.741,
+    lng: 76.86,
+  },
+];
 
-// Load map from api
+// LOAD MAP FROM API
 const AddDelivery = (props) => {
   const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
     googleMapsApiKey: process.env.REACT_PUBLIC_GOOGLE_MAPS_API_KEY,
   });
 
   // VARIABLES USED IN CODE
-
-  // Dummy data for longitude and latitude of drones
-  const Drones = [
-    {
-      lat: 30.74,
-      lng: 76.78,
-    },
-    {
-      lat: 30.731,
-      lng: 76.788,
-    },
-    {
-      lat: 30.741,
-      lng: 76.86,
-    },
-  ];
-  // Center Variable to get current
   const [nearestDrone, setNearestDrone] = useState({
-    lat: "",
-    lng: "",
-    distance: "",
+    lat: undefined,
+    lng: undefined,
+    distance: undefined,
   });
 
   const [NearbyDronesVisibilty, setNearbyDronesVisibilty] = useState(false);
-  const [sendDroneLocationLat, setSendDroneLocationLat] = useState("");
-  const [sendDroneLocationLng, setSendDroneLocationLng] = useState("");
+  const [sendDroneLocationLat, setSendDroneLocationLat] = useState(NaN);
+  const [sendDroneLocationLng, setSendDroneLocationLng] = useState(NaN);
   const [map, setMap] = useState(null);
-  const [lat, setLat] = useState("");
-  const [lng, setLng] = useState("");
+  const [lat, setLat] = useState(NaN);
+  const [lng, setLng] = useState(NaN);
 
   const userLocationDetails = {
     lat: lat,
@@ -63,10 +54,10 @@ const AddDelivery = (props) => {
     lng: sendDroneLocationLng,
   };
 
+  const [stageState, setStageState] = useState("Requesting");
+
   // FUNCTIONS USED IN CODE
-
-  // MAP variable
-
+  // MAP
   const onLoad = useCallback(function callback(map) {
     setMap(map);
   }, []);
@@ -75,7 +66,7 @@ const AddDelivery = (props) => {
     setMap(null);
   }, []);
 
-  // Function to show map
+  // DISPLAY MAP
   const displayMap = () => {
     if (navigator.geolocation) {
       document.getElementById("DeliveryMap").style.display = "Flex";
@@ -86,12 +77,24 @@ const AddDelivery = (props) => {
     }
   };
 
-  // Function to request drop
+  // CLOSE MAP FUNCTION
+  const closeMapEvent = () => {
+    document.getElementById("DeliveryMap").style.display = "none";
+  };
+
+  // REQUEST DROP FETCH REQUEST
   const requestDrop = () => {
     {
-      // REQUEST DROP STATUS FOR STAGE 1 AND 2
-      document.getElementById("Stage1").classList.remove("activeDeliveryStep");
-      document.getElementById("Stage2").classList.add("activeDeliveryStep");
+      fetch(process.env.REACT_APP_BACKEND_URL + "requestDrone", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          coordinates: sendDroneLocation,
+        }),
+      });
+
       // SEARCHING FOR DRONES NEARBY WITH LEAST DISTANCE
       setNearbyDronesVisibilty(true);
       Drones.map((drone, idx) => {
@@ -124,55 +127,26 @@ const AddDelivery = (props) => {
         document.getElementById("Stage3").classList.add("activeDeliveryStep");
         setNearbyDronesVisibilty(false);
       }
-      fetch(process.env.REACT_APP_BACKEND_URL + "requestDrone", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: props.name,
-          email: props.email,
-          id: props.id,
-          coordinates: sendDroneLocation,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.error) {
-            console.log(data.error);
-          } else {
-            console.log(data.message);
-          }
-        });
     }
   };
 
-  // Function to close map on click
-  const closeMapEvent = () => {
-    document.getElementById("DeliveryMap").style.display = "none";
-  };
-
-  // Function to Add marker inside polygon on click
-
+  // ADD MARKER INSIDE POLIGON
   function requestDropMarker(event) {
-    // if (NearbyDronesVisibilty) {
     setSendDroneLocationLat(event.latLng.lat());
     setSendDroneLocationLng(event.latLng.lng());
-    // } else {
-    // alert("You cannot change postion in between the delivery process");
-    // }
   }
+  // REQUEST DRONE OUTSIDE THE POLIGON
   function requestDropMarkerOutside() {
-    alert("HEy");
+    console.log("Sorry we don't work at that location now");
   }
-  // Function to check is Drone inside 1 km or not
+  // CHECK DISTANCE BETWEEN 2 MARKER
   function distanceEligibilty(mk1, mk2) {
     var R = 6371.071; // Radius of the Earth in miles
     var rlat1 = mk1.lat * (Math.PI / 180); // Convert degrees to radians
     var rlat2 = mk2.lat * (Math.PI / 180); // Convert degrees to radians
     var difflat = rlat2 - rlat1; // Radian difference (latitudes)
     var difflon = (mk2.lng - mk1.lng) * (Math.PI / 180); // Radian difference (longitudes)
-    var d =
+    var distance =
       2 *
       R *
       Math.asin(
@@ -184,23 +158,28 @@ const AddDelivery = (props) => {
               Math.sin(difflon / 2)
         )
       );
-    return d;
+    return distance;
   }
 
-  // To check is it loaded or not
+  // TO LOAD MAP API
   if (!isLoaded) {
-    return <div>Loading..</div>;
+    return <div>Loading.. Please Wait</div>;
   }
-  // ////////////////////////////////////////////////
+  //FRONTEND HERE
   return (
     <div className="dashCard">
       <h1>{props.heading}</h1>
+
+      {/* REQUEST DROP BUTTON */}
       <button onClick={displayMap}>Request Drop</button>
       <div className="MapBox">
         <div id="DeliveryMap">
+          {/* CLOSE MAP BUTTON */}
           <div id="CloseMapBtn" onClick={closeMapEvent}>
             Close map
           </div>
+
+          {/* MAP BUTTONS */}
           <div className="deliveryMapButtons">
             <ul>
               <li>
@@ -208,6 +187,7 @@ const AddDelivery = (props) => {
               </li>
             </ul>
           </div>
+
           <GoogleMap
             center={userLocationDetails}
             onLoad={onLoad}
@@ -216,14 +196,15 @@ const AddDelivery = (props) => {
             zoom={15}
             mapContainerStyle={{ width: "100vw", height: "100vh" }}
           >
-            {/* User location marker */}
+            {/* USER LOCATION MARKER */}
             {() => {
-              if (1) {
+              if ((sendDroneLocation = "")) {
                 <Marker position={userLocationDetails}></Marker>;
               }
             }}
-            {/* Send Drone marker */}
+            {/* SELECTED LOCATION MARKER*/}
             <Marker position={sendDroneLocation} draggable={false}></Marker>
+            {/* POLYGON FOR SERVICE AREA */}
             <Polygon
               zIndex={1}
               onClick={requestDropMarker}
@@ -235,7 +216,7 @@ const AddDelivery = (props) => {
               fillOpacity={0.35}
               draggable={false}
             />
-            {/*Show Drones */}
+            {/* SHOW DRONES */}
             {Drones.map((drone, idx) => {
               if (distanceEligibilty(drone, sendDroneLocation) <= 1) {
                 return (
@@ -246,9 +227,9 @@ const AddDelivery = (props) => {
                 );
               }
             })}
-            {/* Show drone that has been assigned */}
+            {/* SHOW ASSIGNED DRONE */}
             <Marker position={nearestDrone} draggable={false}></Marker>;
-            {/* Polyline from desired location to drone */}
+            {/* LINE TO LOCATION AND DRONE */}
             <Polyline
               path={[nearestDrone, sendDroneLocation]}
               strokeColor={"#FF0000"}
@@ -262,6 +243,8 @@ const AddDelivery = (props) => {
               visible={!NearbyDronesVisibilty}
             />
           </GoogleMap>
+
+          {/* DELIVERY STEPS */}
           <div id="DeliveryStepsStatus">
             <ul>
               <li className="activeDeliveryStep" id="Stage1">

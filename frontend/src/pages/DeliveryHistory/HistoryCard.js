@@ -2,17 +2,17 @@ import React from "react";
 import "./deliveryHistory.css";
 
 const HistoryCard = (props) => {
-  // Function to see more details about the order
+  // MORE CARD DETAILS
   const moreDetailsTab = () => {
     document.getElementById("moreDetailsCard").style.display = "Block";
   };
-  // Function to hide elaborated details about the order on click to close
+  // CLOSE MORE CARD DETIALS
   const CloseHistoryCard = () => {
     document.getElementById("moreDetailsCard").style.display = "None";
   };
   return (
     <>
-      {/* Elaborated Details card to be shown on Card click */}
+      {/* MORE CARD DETAILS */}
       <div id="moreDetailsCard">
         <div id="CloseHistoryCard" onClick={CloseHistoryCard}>
           Close
@@ -20,12 +20,13 @@ const HistoryCard = (props) => {
         <p>This is more detials Card {props.packageName}</p>
       </div>
 
-      {/* Basic Card to be shown on page */}
+      {/*DELIVERY HISTORY CARD*/}
       <div id="HistoryCard" onClick={moreDetailsTab}>
         <div className="mainHistoryContent">
           <h2>{props.packageName}</h2>
           <p>{props.packageWeight} Kg</p>
         </div>
+
         <div className="historyQuantity">
           <p>{props.packageQuantity}</p>
           <p>Quantity</p>

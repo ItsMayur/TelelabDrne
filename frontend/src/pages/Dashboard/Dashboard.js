@@ -1,29 +1,25 @@
 import React, { useEffect, useState } from "react";
 import "./dashboard.css";
-import { useNavigate, Link } from "react-router-dom";
 import AddDelivery from "./AddDelivery";
-import Sidebar from "../../components/DashboardSidebar/Sidebar";
+import Sidebar from "../../components/Sidebar/Sidebar";
 import NavDashboard from "../../components/NavDashboard/NavDashboard";
 
 const Dashboard = (props) => {
-  // Function to log out user on click
-
   return (
     <div id="Dashboard">
-      {/* Left side of the dashboard */}
+      {/* LEFT SIDE OF DASHBOARD*/}
       <Sidebar activeLink="Dashboard" />
-      {/* Right side of the dashboard */}
-      {/* Navbar that display page name and user credential */}
+
+      {/* RIGHT SIDE OF DASHBOARD */}
       <div className="mainDashboardPage">
-        {/* Navbar of Dashboard */}
+        {/* PAGE HEADING AND USER DETAILS */}
         <NavDashboard
           pageHeading="Dashboard"
-          name={props.name}
-          email={props.email}
-          id={props.id}
+          Name={props.Name}
+          Organisation={props.Organisation}
         />
 
-        {/* Mainpage for dashboard */}
+        {/* MAIN CONTENT */}
         <div className="dashPage">
           <div className="dashCards">
             <AddDelivery
